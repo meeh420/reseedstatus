@@ -3,6 +3,7 @@
 require 'utils.class.php';
 require 'databasehandle.class.php';
 require 'history.class.php';
+require 'check.class.php';
 require 'config.php';
 
 // DON'T TOUCH
