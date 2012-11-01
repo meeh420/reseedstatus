@@ -1,3 +1,6 @@
+##
+## Thanks to psi for this python module!
+##
 import os,sys,struct,time
 
 class _mutnum:

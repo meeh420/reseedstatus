@@ -39,7 +39,7 @@ class History {
         // 168 = a week checked each hour
         $this->db->doQuery($sql);
         $tmp = $this->db->fetchObjects();
-        if (is_array($tmp)&&  is_object($tmp[0])) return $tmp;
+        if (is_array($tmp)&&is_object($tmp[0])) return $tmp;
         return false;
     }
     
@@ -91,4 +91,21 @@ class History {
         return $ok;
     }
     
+    public function cleanup() {
+        // 608400 = a week + 1 hour
+        $sql = "select he.id from history h right join ".
+               "hist_extra he on h.id=he.history_id where time ".
+               "< (UNIX_TIMESTAMP()-608400);";
+        $this->db->doQuery($sql);
+        $tmp = $this->db->fetchObjects();
+        if (is_array($tmp)) {
+            if (is_object(next($tmp))) {
+                foreach ($tmp as $t) {
+                    $this->db->doQuery(sprintf("delete from hist_extra where id = %d limit 1;",$t->id));
+                }
+            }
+        }
+        $this->db->doQuery("delete from history where time < (UNIX_TIMESTAMP()-608400);");
+    }
+
 }

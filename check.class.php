@@ -2,9 +2,8 @@
 
 class Check {
     
-    private $hostname;
+    private $hostname,$history;
     private $pyric,$numri,$id;
-    private $history=false;
     private $frontcontent=false;
     private $tmpdir,$rilinks,$filelist;
 
@@ -12,17 +11,13 @@ class Check {
     public function Check($host = false,$history=false,$id=false,$tmp=false) {
         if (substr($host,-1)!='/') $host = $host.'/';
         if ($host) $this->hostname = $host;
-        if ($history) $this->history=$history;
+        $this->history=$history;
         $this->id = $id;
         // Python script read folders, so best to separate folders
         if ($tmp) { $this->tmpdir = $tmp; } else { $this->tmpdir=__DIR__.'/tmp/'.md5($host).'/'; }
         // Create dir if not exists
         if (!is_dir($this->tmpdir)) { mkdir($this->tmpdir); }
         $this->pyric = __DIR__.'/ridate/ripubd.py';
-    }
-    
-    public function setHost($host) {
-        $this->hostname = $host;
     }
     
     public function initCheck($num_ri=30) {
@@ -32,6 +27,9 @@ class Check {
         $ok = $this->checkRILinks();
         if ($ok[0]!=0) { $this->cleanup(); return array($ok[0],$ok[1]); }
         $ok = $this->checkRIs();
+        $this->cleanup();
+        if (is_object($this->history)&&($ok[0]>=0)) $this->history->addHistory($this->id,$ok[0]);
+        return array($ok[0],$ok[1]);
     }
     
     protected function checkFrontpage() {
@@ -98,7 +96,10 @@ class Check {
             return array(-6,'RIs are over three days old.');
         } else if ($res['max']<(time()-172800)) {
             // routerInfo file older than two days
+            if (is_object($this->history)) $this->history->addHistory($id,-7,array($res['min'],$res['max']));
+            return array(-7,'RIs are over two days old.');
         }
+        return array(0,'Host OK');
     }
     
     protected function pyCheckRI($debug=false) {
@@ -113,6 +114,8 @@ class Check {
         foreach ($matches[0] as $ndate) {
             $dates[] = strtotime(str_replace("'",'',$ndate));
         }
+        // Return error if cmd can't run or returned empty
+        if (count($dates)<=0) return false;
         return array(
             'max' => max($dates),
             'min' => min($dates)
@@ -121,6 +124,13 @@ class Check {
     
     protected function cleanup() {
         // Cleanup downloaded stuff etc.
+        $h = opendir($this->tmpdir);
+        while (false !== ($e = readdir($h))) {
+            if ($e!='.'&&$e!='..'&&is_file($this->tmpdir.'/'.$e)) unlink ($this->tmpdir.'/'.$e);
+        }
+        if (is_object($this->history)) $this->history->cleanup();
+        closedir($h);
+        rmdir($this->tmpdir);
     }
 }
 
