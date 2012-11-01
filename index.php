@@ -44,7 +44,7 @@ $messages = array(
 <h1>Reseed monitoring (BETA)</h1><br>
 Short information:<br>
 <pre>
-This site fetches information from reseed hosts once each hour. Then it checks for href="routerInfo* in the returned content. If routerInfo files found, it will download routerInfo files and check "Published on" date via net.i2p.data.RouterInfo class.
+This site fetches information from reseed hosts once each hour. Then it checks for href="routerInfo* in the returned content. If routerInfo files found, it will download routerInfo files and check "Published on" date via a python script reading RIs.
 </pre>
 <br>
 <b>What can make a reseed host fail this test?</b><br>
