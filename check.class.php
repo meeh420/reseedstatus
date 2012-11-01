@@ -2,10 +2,10 @@
 
 class Check {
     
-    private $hostname,$history;
-    private $pyric,$numri,$id;
-    private $frontcontent=false;
-    private $tmpdir,$rilinks,$filelist;
+    protected $hostname,$history;
+    protected $pyric,$numri,$id;
+    protected $frontcontent=false;
+    protected $tmpdir,$rilinks,$filelist;
 
 
     public function Check($host = false,$history=false,$id=false,$tmp=false) {
@@ -38,7 +38,7 @@ class Check {
         if (strlen($content)<100||$content===false) {
             // Retry 5 times before returning error
             for ($i=0;$i<5;$i++) {
-                $content = Utils::curl_request($url);
+                $content = Utils::curl_request($this->hostname);
                 if (strlen($content)>100||$content!==false) break;
             }
             if ($content===false) {
