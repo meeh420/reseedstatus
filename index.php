@@ -55,7 +55,7 @@ This site fetches information from reseed hosts once each hour. Then it checks f
     <li>Network problems.</li>
 </ol>
 <br>
-<p class="text-info">Source for this monitoring system will be released after code cleanup/improvements &amp; review.</p>
+<p class="text-info">Source for this monitoring system is hosted at <a href="http://git.repo.i2p/w/rsstatus.git">http://git.repo.i2p/w/rsstatus.git</a>.</p>
 <br>
 <?php
 
