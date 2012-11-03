@@ -1,20 +1,19 @@
 <?php
 
-require __DIR__.'/../common.php';
 
 /*
 Testing for checks
 */
 
-class Check_Test extends Check {
+class Test_Check extends Check {
 
     public function initTests() {
         $this->testRI_isNew();
         $this->testRI_isThreedays();
-        $this->checkFrontPage();
+        $this->testFrontPage();
     }
 
-    public function checkFrontPage() {
+    public function testFrontPage() {
         echo "Testing html link errors\n";
         $expected = -2;
         $this->frontcontent = '<html></html>';
@@ -34,7 +33,7 @@ class Check_Test extends Check {
     public function testRI_isThreedays() {
         echo "Testing three days+ old RI file\n";
         $expected_result = '-6';
-        $this->tmpdir = __DIR__.'/oldri/';
+        $this->tmpdir = __DIR__.'/testfiles/oldri/';
         $this->pyric = __DIR__.'/../ridate/ripubd.py';
         $res = $this->pyCheckRI();
         if ($res['max']<(time()-259200)) {
@@ -43,9 +42,5 @@ class Check_Test extends Check {
         echo "Expected: -6 Got: $result\n";
     }
 }
-
-
-$test = new Check_Test();
-$test->initTests();
 
 

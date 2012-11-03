@@ -2,3 +2,5 @@ tmp/*
 config.php
 nbproject/private/*
 *.pyc
+*.class
+*.swp
