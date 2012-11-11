@@ -53,7 +53,7 @@ This site fetches information from reseed hosts once each hour. Then it checks f
 <ol>
     <li>If the content from host is less than 100 characters.</li>
     <li>If no href="routerInfo* is found in content from host.</li>
-    <li>If none of the routerInfo test samples was published less than a day ago.</li>
+    <li>If none of the routerInfo test samples was published less than a week ago.</li>
     <li>Network problems.</li>
 </ol>
 <br>
