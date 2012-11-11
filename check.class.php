@@ -91,13 +91,13 @@ class Check {
             return array(-3,'Couldn\'t decode downloaded RIs.');
         }
         // 3 days check
-        if ($res['max']<(time()-259200)) {
-            if (is_object($this->history)) $this->history->addHistory($this->id,-6,array($res['min'],$res['max']));
-            return array(-6,'RIs are over three days old.');
-        } else if ($res['max']<(time()-172800)) {
-            // routerInfo file older than two days
-            if (is_object($this->history)) $this->history->addHistory($id,-7,array($res['min'],$res['max']));
-            return array(-7,'RIs are over two days old.');
+        if ($res['max']<(time()-691200)) {
+            if (is_object($this->history)) $this->history->addHistory($this->id,-9,array($res['min'],$res['max']));
+            return array(-9,'RIs are over a week old.');
+        } else if ($res['max']<(time()-604800)) {
+            // routerInfo file older than a week
+            if (is_object($this->history)) $this->history->addHistory($id,-8,array($res['min'],$res['max']));
+            return array(-8,'RIs is a week old.');
         }
         return array(0,'Host OK');
     }

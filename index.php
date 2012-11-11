@@ -19,7 +19,7 @@ switch ($view) {
         $view_page='main';
 }
 
-
+//TODO: Remove old messages when no entries are left of them in db.
 $messages = array(
      0 => '<p class="text-success">OK - host works!</p>',
     -1 => '<p class="text-error">Error - Too little content returned. Something is wrong.</p>',
@@ -29,6 +29,8 @@ $messages = array(
     -5 => '<p class="text-error">Error - Network problems or host is down.</p>',
     -6 => '<p class="text-error">Error - Host contains routerInfo with published date older than three days. (Newest: %s, Oldest: %s)</p>',
     -7 => '<p class="text-warning">Warning - Host contains routerInfo with published date older than two days.</p>',
+    -8 => '<p class="text-warning">Warning - Host contains routerInfo with published date a week ago.</p>',
+    -9 => '<p class="text-error">Error - Host contains routerInfo with published date older than a week. (Newest: %s, Oldest: %s)</p>',
 );
 
 //TODO: Template system.. smarty?
