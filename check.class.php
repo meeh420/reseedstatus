@@ -90,7 +90,7 @@ class Check {
             if (is_object($this->history)) $this->history->addHistory($this->id,-3);
             return array(-3,'Couldn\'t decode downloaded RIs.');
         }
-        // 3 days check
+        // Check if the RIs are not a week old. 
         if ($res['max']<(time()-691200)) {
             if (is_object($this->history)) $this->history->addHistory($this->id,-9,array($res['min'],$res['max']));
             return array(-9,'RIs are over a week old.');

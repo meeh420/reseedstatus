@@ -80,7 +80,7 @@ foreach ($history->getLastHistory() as $hist) {
             .'">'.$hist->addr.'</a></td><td><p class="text-info">'.
             date('H:i:s d.M.Y',$hist->time).'</p></td><td>';
     $status_code = $hist->msg_id;
-    if ($status_code==-6) {
+    if ($status_code==-6||$status_code==-9) {
         echo '<b>'.sprintf($messages[$status_code],
                 date('H:i:s d.M.Y',$hist->ri_max),date('H:i:s d.M.Y',$hist->ri_min)).'</b>'."\n";
     } else if ($status_code==-3) {
