@@ -20,7 +20,7 @@ class Check {
         $this->pyric = __DIR__.'/ridate/ripubd.py';
     }
     
-    public function initCheck($num_ri=30) {
+    public function initCheck($num_ri=20) {
         $this->numri=$num_ri;
         $ok = $this->checkFrontpage();
         if ($ok!=0) return array($ok,'Network problems or problems loading front page');
