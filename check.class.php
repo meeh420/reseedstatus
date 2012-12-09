@@ -25,7 +25,14 @@ class Check {
         $ok = $this->checkFrontpage();
         if ($ok!=0) return array($ok,'Network problems or problems loading front page');
         $ok = $this->checkRILinks();
-        if ($ok[0]!=0) { $this->cleanup(); return array($ok[0],$ok[1]); }
+        if ($ok[0]!=0) {
+            // Try once more
+            $ok = $this->checkRILinks();
+            if ($ok[0]!=0) {
+                $this->cleanup();
+                return array($ok[0],$ok[1]);
+            }
+        }
         $ok = $this->checkRIs();
         $this->cleanup();
         if (is_object($this->history)&&($ok[0]>=0)) $this->history->addHistory($this->id,$ok[0]);
